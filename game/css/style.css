@@ -1,0 +1,55 @@
+/* NEON HARBOR — HUD and menu styling. System fonts only; no network assets. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #0b0f1e; }
+body { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; color: #eef2ff; }
+#app { position: fixed; inset: 0; }
+#scene { display: block; width: 100%; height: 100%; touch-action: none; }
+.hidden { display: none !important; }
+
+/* ---------- HUD ---------- */
+#hud { position: absolute; inset: 0; pointer-events: none; }
+#top-left { position: absolute; top: 16px; left: 18px; }
+#wanted { font-size: 30px; letter-spacing: 4px; color: #ffd23e; text-shadow: 0 0 12px rgba(255, 210, 62, .8); min-height: 36px; }
+#wanted .dim { color: rgba(255, 255, 255, .22); text-shadow: none; }
+#cash { font-size: 26px; font-weight: 800; color: #7dff9b; text-shadow: 0 2px 8px rgba(0,0,0,.7); margin-top: 2px; }
+#health { width: 210px; height: 18px; margin-top: 8px; background: rgba(0,0,0,.55); border: 1px solid rgba(255,255,255,.35); border-radius: 9px; overflow: hidden; position: relative; }
+#health-fill { height: 100%; width: 100%; background: linear-gradient(90deg, #ff5a5a, #ffb03a); transition: width .15s ease-out; }
+#health-text { position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; line-height: 18px; color: #fff; text-shadow: 0 1px 2px #000; }
+
+#objective { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); text-align: center; max-width: 560px; }
+#objective-title { display: block; font-size: 13px; font-weight: 800; letter-spacing: 3px; color: #ffd23e; text-transform: uppercase; text-shadow: 0 2px 6px #000; }
+#objective-text { display: block; font-size: 17px; font-weight: 600; margin-top: 3px; text-shadow: 0 2px 6px #000; }
+
+#minimap-wrap { position: absolute; right: 16px; top: 16px; width: 200px; height: 200px; border: 2px solid rgba(255,255,255,.45); border-radius: 50%; overflow: hidden; background: #0a0e1a; box-shadow: 0 0 0 4px rgba(0,0,0,.35); }
+#minimap { width: 200px; height: 200px; }
+#speed { position: absolute; right: 8px; bottom: 6px; font-size: 22px; font-weight: 800; color: #fff; text-shadow: 0 2px 4px #000; }
+#speed::after { content: " km/h"; font-size: 11px; font-weight: 600; color: #cdd6ff; }
+
+#missions { position: absolute; left: 18px; bottom: 44px; font-size: 14px; line-height: 1.7; text-shadow: 0 2px 4px #000; }
+#missions .done { color: #7dff9b; text-decoration: line-through; }
+#missions .active { color: #ffd23e; font-weight: 700; }
+#missions .todo { color: rgba(255,255,255,.55); }
+
+#toast { position: absolute; left: 50%; bottom: 120px; transform: translateX(-50%); font-size: 22px; font-weight: 800; color: #ffd23e; text-shadow: 0 2px 10px #000; opacity: 0; transition: opacity .3s; text-align: center; white-space: nowrap; }
+#toast.show { opacity: 1; }
+#hint { position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); font-size: 12px; color: rgba(255,255,255,.75); text-shadow: 0 1px 3px #000; white-space: nowrap; }
+#vignette { position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 140px 40px rgba(180, 0, 0, 0); transition: box-shadow .3s; }
+#vignette.low { box-shadow: inset 0 0 140px 40px rgba(180, 0, 0, .55); }
+#damage-flash { position: absolute; inset: 0; pointer-events: none; background: rgba(255, 30, 30, 0); transition: background .12s; }
+#damage-flash.hit { background: rgba(255, 30, 30, .28); }
+
+/* ---------- Screens ---------- */
+.screen { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(180deg, rgba(8,10,24,.82), rgba(8,10,24,.55) 55%, rgba(8,10,24,.88)); pointer-events: auto; }
+.logo { font-size: 84px; font-weight: 900; letter-spacing: 6px; color: #fff; text-shadow: 0 0 24px rgba(0, 229, 255, .65), 0 4px 0 rgba(0,0,0,.4); }
+.logo span { color: #00e5ff; }
+.logo.small { font-size: 56px; }
+.logo.red { color: #ff4d4d; text-shadow: 0 0 24px rgba(255, 60, 60, .7); }
+.logo.gold { color: #ffd23e; text-shadow: 0 0 24px rgba(255, 210, 62, .7); }
+.tagline { margin-top: 10px; font-size: 19px; color: #cdd6ff; }
+.menu { margin-top: 34px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.menu button { pointer-events: auto; cursor: pointer; min-width: 320px; padding: 14px 26px; font-size: 18px; font-weight: 800; letter-spacing: 2px; color: #06121f; background: linear-gradient(180deg, #ffe45e, #ffb03a); border: none; border-radius: 8px; box-shadow: 0 6px 0 #a86e00, 0 10px 24px rgba(0,0,0,.5); }
+.menu button:hover { filter: brightness(1.08); }
+.menu button:active { transform: translateY(4px); box-shadow: 0 2px 0 #a86e00; }
+#howto { margin-top: 22px; max-width: 640px; text-align: center; line-height: 1.9; font-size: 15px; color: #dfe6ff; background: rgba(0,0,0,.4); padding: 16px 22px; border-radius: 10px; border: 1px solid rgba(255,255,255,.18); }
+#howto b { color: #ffd23e; }
+.foot { position: absolute; bottom: 18px; font-size: 12px; color: rgba(255,255,255,.5); }

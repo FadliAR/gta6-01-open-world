@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEON HARBOR — Open-World Crime</title>
+<link rel="stylesheet" href="./css/style.css">
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.min.js" } }
+</script>
+</head>
+<body>
+<div id="app">
+  <canvas id="scene"></canvas>
+  <div id="hud" class="hidden">
+    <div id="top-left">
+      <div id="wanted"></div>
+      <div id="cash">$0</div>
+      <div id="health"><div id="health-fill"></div><span id="health-text">100</span></div>
+    </div>
+    <div id="objective"><span id="objective-title"></span><span id="objective-text"></span></div>
+    <div id="minimap-wrap"><canvas id="minimap" width="200" height="200"></canvas><div id="speed">0</div></div>
+    <div id="missions"></div>
+    <div id="toast"></div>
+    <div id="hint">WASD move &nbsp;·&nbsp; SHIFT run &nbsp;·&nbsp; SPACE jump &nbsp;·&nbsp; F punch &nbsp;·&nbsp; E enter / exit car &nbsp;·&nbsp; M mute &nbsp;·&nbsp; ESC pause</div>
+    <div id="vignette"></div>
+    <div id="damage-flash"></div>
+  </div>
+  <div id="title" class="screen">
+    <div class="logo">NEON<span>HARBOR</span></div>
+    <div class="tagline">One courier. One city. Three jobs before sunrise.</div>
+    <div class="menu">
+      <button id="play-btn">▶ &nbsp;START THE NIGHT</button>
+      <button id="how-btn">HOW TO PLAY</button>
+    </div>
+    <div id="howto" class="hidden">
+      <p><b>WASD</b> move &nbsp;·&nbsp; <b>Mouse drag</b> look &nbsp;·&nbsp; <b>SHIFT</b> run &nbsp;·&nbsp; <b>SPACE</b> jump</p>
+      <p><b>E</b> steal / enter a car, <b>E</b> again to get out &nbsp;·&nbsp; <b>W/S</b> drive, <b>A/D</b> steer, <b>SPACE</b> handbrake</p>
+      <p><b>F</b> punch. Crime raises your <b>wanted stars</b> — cops chase, and getting caught means BUSTED.</p>
+      <p>Follow the yellow beacon. Finish all three jobs to become a Harbor Legend.</p>
+    </div>
+    <div class="foot">An original open-world crime game. No real city, no real people — Neon Harbor is fiction.</div>
+  </div>
+  <div id="pause" class="screen hidden">
+    <div class="logo small">PAUSED</div>
+    <div class="menu"><button id="resume-btn">RESUME</button><button id="restart-btn">RESTART NIGHT</button></div>
+    <div class="foot">ESC to resume</div>
+  </div>
+  <div id="busted" class="screen hidden">
+    <div class="logo small red">BUSTED</div>
+    <div class="tagline">The Harbor PD caught up with you. Bail posted: $50.</div>
+    <div class="menu"><button id="busted-btn">BACK ON THE STREETS</button></div>
+  </div>
+  <div id="wasted" class="screen hidden">
+    <div class="logo small red">WASTED</div>
+    <div class="tagline">You woke up at the Harbor Clinic, $50 lighter.</div>
+    <div class="menu"><button id="wasted-btn">BACK ON THE STREETS</button></div>
+  </div>
+  <div id="complete" class="screen hidden">
+    <div class="logo small gold">HARBOR LEGEND</div>
+    <div class="tagline" id="complete-text">All three jobs done. Neon Harbor is yours.</div>
+    <div class="menu"><button id="complete-btn">FREE ROAM</button></div>
+  </div>
+</div>
+<script type="module" src="./js/main.js"></script>
+</body>
+</html>
