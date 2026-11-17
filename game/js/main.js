@@ -31,11 +31,11 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x141b33);
 scene.fog = new THREE.FogExp2(0x141b33, 0.0026);
 const camera = new THREE.PerspectiveCamera(62, window.innerWidth / window.innerHeight, 0.1, 900);
-scene.add(new THREE.HemisphereLight(0x8a9cc8, 0x1a1410, 0.85));
-const moon = new THREE.DirectionalLight(0xbfd0ff, 1.1);
+scene.add(new THREE.HemisphereLight(0x8a9cc8, 0x1a1410, 1.05));
+const moon = new THREE.DirectionalLight(0xbfd0ff, 1.35);
 moon.position.set(-120, 180, 60);
 scene.add(moon);
-const dusk = new THREE.DirectionalLight(0xff9a5a, 0.5);
+const dusk = new THREE.DirectionalLight(0xff9a5a, 0.55);
 dusk.position.set(140, 40, -80);
 scene.add(dusk);
 
@@ -94,10 +94,7 @@ function respawn(kind) {
   cash = Math.max(0, cash - CFG.bustedFine);
   wanted.clear();
   player.reset(city.clinicPos);
-  if (driving.car) {
-    const out = driving.exit();
-    if (out) driving.addParked(out.car.pos.x, out.car.pos.z, out.car.yaw, 0xc2c2c2);
-  }
+  if (driving.car) driving.exit(); // exit() re-parks the car where it stands.
   player.heal(CFG.playerHealth);
   followCam.reset(0, player.pos);
   state = 'playing';
@@ -238,10 +235,14 @@ function doInteract() {
 
 // --- Simulation step -----------------------------------------------------------
 function step(dt) {
-  const inCar = !!driving.car;
-  if (pressed.has('punch') && !inCar) doPunch();
+  // Interactions can change whether the player is in a car, so the car
+  // state is read AFTER them — reading it before and reusing it after an
+  // exit dereferences a null car.
+  const wasInCar = !!driving.car;
+  if (pressed.has('punch') && !wasInCar) doPunch();
   if (pressed.has('interact')) doInteract();
   pressed.clear();
+  const inCar = !!driving.car;
   if (inCar) {
     driving.update(dt, keys, traffic, peds,
       (speed) => {
@@ -311,29 +312,34 @@ function stageShot(name) {
     player.pos.set(-55, 0, -82);
     player.yaw = Math.PI;
     followCam.reset(Math.PI, player.pos);
-    followCam.dist = 8;
+    followCam.dist = 7;
     warm();
   } else if (name === 'chase') {
     // Driving fast with a 3-star wanted level and police on the tail.
-    const car = driving.addParked(0, 8, 0, 0x2a2a2e);
+    // Bright red car so the player reads instantly in the frame.
+    const car = driving.addParked(0, 8, 0, 0xd81e1e);
     driving.enter(car, traffic);
     driving.car.speed = 26;
     holdSpeed = 26;
     wanted.addHeat(3, 'stage');
+    // Two police cars staged close behind (before warm-up, so the wanted
+    // system's cap of 2 keeps exactly these two).
+    wanted.spawnPoliceCar(0, -24, 0);
+    wanted.spawnPoliceCar(8, -34, 0);
     player.pos.copy(driving.car.pos);
     followCam.reset(Math.PI, driving.car.pos);
     followCam.dist = CFG.camCarDist;
     warm();
   } else if (name === 'docks') {
     // On foot at the docks, mission beacon glowing over the pier.
-    player.pos.set(48, 0, 168);
+    player.pos.set(48, 0, 171);
     player.yaw = 0;
     followCam.reset(0, player.pos);
-    followCam.dist = 9;
+    followCam.dist = 8;
     warm();
   } else if (name === 'spire') {
     // High wide shot of the plaza and the Harbor Spire at dusk.
-    cameraOverride = { pos: new THREE.Vector3(120, 95, 150), look: new THREE.Vector3(-10, 18, -10) };
+    cameraOverride = { pos: new THREE.Vector3(85, 55, 100), look: new THREE.Vector3(-25, 12, -25) };
     camera.position.copy(cameraOverride.pos);
     camera.lookAt(cameraOverride.look);
     warm();

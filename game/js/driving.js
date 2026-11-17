@@ -50,6 +50,9 @@ export class DrivingSystem {
     if (!this.car) return null;
     const car = this.car;
     this.car = null;
+    // The car stays where it is, parked and enterable again.
+    car.parked = true;
+    this.parked.push(car);
     // Step out on the driver's side.
     const side = { x: car.pos.x + Math.cos(car.yaw) * 1.6, z: car.pos.z - Math.sin(car.yaw) * 1.6 };
     return { car, side };

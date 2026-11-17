@@ -53,7 +53,7 @@ export function buildCity(scene, rng) {
   const colliders = [];
   const facade = makeFacadeTexture(rng.child(11));
   const wallMats = [0x5a6b8c, 0x6b5a7d, 0x4d6b6b, 0x7d6b5a, 0x54607a, 0x715f6e].map(
-    (color) => new THREE.MeshStandardMaterial({ color, map: facade, emissive: 0xffffff, emissiveMap: facade, emissiveIntensity: 0.55, roughness: 0.85 })
+    (color) => new THREE.MeshStandardMaterial({ color, map: facade, emissive: 0xffffff, emissiveMap: facade, emissiveIntensity: 0.75, roughness: 0.85 })
   );
   const roofMat = new THREE.MeshStandardMaterial({ color: 0x232838, roughness: 0.95 });
   const roadMat = new THREE.MeshStandardMaterial({ color: 0x20242f, roughness: 0.95 });
@@ -61,7 +61,7 @@ export function buildCity(scene, rng) {
   const groundMat = new THREE.MeshStandardMaterial({ color: 0x14161f, roughness: 1 });
   const grassMat = new THREE.MeshStandardMaterial({ color: 0x1d4a2a, roughness: 1 });
   const dashMat = new THREE.MeshStandardMaterial({ color: 0xd8b13a, emissive: 0x6b5510, roughness: 0.8 });
-  const waterMat = new THREE.MeshStandardMaterial({ color: 0x0b3049, roughness: 0.25, metalness: 0.55 });
+  const waterMat = new THREE.MeshStandardMaterial({ color: 0x0e3a58, roughness: 0.25, metalness: 0.55, emissive: 0x0a2438, emissiveIntensity: 0.7 });
   const woodMat = new THREE.MeshStandardMaterial({ color: 0x6b4a2a, roughness: 0.9 });
 
   // Ground, roads, sidewalks.
